@@ -93,6 +93,16 @@ fun VariantDimension.setAuthorityPostfix(postfix: String) {
     buildConfigField("String", "AUTHORITY_POSTFIX", "\"$postfix\"")
 }
 
+/**
+ * Path (on the landing-page host) of the "add contact" link for this build type. Debug builds use a
+ * different path so the landing page can target the `.debug` package; the trailing slash keeps
+ * `/add/` from also matching `/add-debug/` in the manifest's `pathPrefix`.
+ */
+fun VariantDimension.setContactLinkPath(path: String) {
+    manifestPlaceholders["contact_link_path"] = path
+    buildConfigField("String", "CONTACT_LINK_PATH", "\"$path\"")
+}
+
 fun VariantDimension.enableClientVersionCheck(enable: Boolean) {
     buildConfigField(
         "boolean",
@@ -189,6 +199,7 @@ android {
             enablePermissiveNetworkSecurityConfig(false)
             setAlternativeAppName(null)
             setAuthorityPostfix("")
+            setContactLinkPath("/add/")
         }
 
         create("releaseWithDebugMenu") {
@@ -234,6 +245,7 @@ android {
             enableClientVersionCheck(false)
             setAlternativeAppName("Session Debug")
             setAuthorityPostfix(".debug")
+            setContactLinkPath("/add-debug/")
         }
     }
 

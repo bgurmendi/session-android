@@ -136,7 +136,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="bgurmendi.github.io" android:pathPrefix="/add" />
+                <data android:scheme="https" android:host="bgurmendi.github.io" android:pathPrefix="${contact_link_path}" />
             </intent-filter>
         </activity>
         <activity

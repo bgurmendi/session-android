@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import network.loki.messenger.BuildConfig
 import network.loki.messenger.R
 import org.thoughtcrime.securesms.ApplicationContext
 
@@ -15,7 +16,7 @@ fun Context.sendInvitationToUseSession() {
     val accountId = (applicationContext as ApplicationContext).loginStateRepository.get().requireLocalNumber()
 
     // Landing page (session-link) that opens the session://add#<id> deeplink handled by HomeActivity
-    val txt = "https://bgurmendi.github.io/add/#$accountId"
+    val txt = "https://bgurmendi.github.io${BuildConfig.CONTACT_LINK_PATH}#$accountId"
 
     Intent().apply {
         action = Intent.ACTION_SEND
