@@ -14,8 +14,8 @@ fun Context.sendInvitationToUseSession() {
 
     val accountId = (applicationContext as ApplicationContext).loginStateRepository.get().requireLocalNumber()
 
-    // Deeplink handled by HomeActivity: opens "add contact" prefilled with this account ID
-    val txt = "session://add#$accountId"
+    // Landing page (session-link) that opens the session://add#<id> deeplink handled by HomeActivity
+    val txt = "https://getsession.org/add#$accountId"
 
     Intent().apply {
         action = Intent.ACTION_SEND

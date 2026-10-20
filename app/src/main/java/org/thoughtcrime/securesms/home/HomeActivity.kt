@@ -1086,7 +1086,7 @@ class HomeActivity : ScreenLockActionBarActivity(),
         handleDeepLink(intent)
     }
 
-    // session://add#<accountId> opens the "enter account ID" screen prefilled with the id
+    // session://add#<accountId> and https://getsession.org/add#<accountId> open the "enter account ID" screen prefilled with the id
     private fun handleDeepLink(intent: Intent) {
         if (intent.action != Intent.ACTION_VIEW) return
         val accountId = intent.data?.fragment?.trim()?.takeIf { it.isNotEmpty() } ?: return

@@ -132,6 +132,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="session" android:host="add" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="getsession.org" android:path="/add" />
+            </intent-filter>
         </activity>
         <activity
             android:name="org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity"
