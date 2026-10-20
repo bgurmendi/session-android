@@ -5,9 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import org.session.libsession.utilities.Phrase
 import network.loki.messenger.R
-import org.session.libsession.utilities.StringSubstitutionConstants.ACCOUNT_ID_KEY
 import org.thoughtcrime.securesms.ApplicationContext
 
 fun Context.sendInvitationToUseSession() {
@@ -16,9 +14,8 @@ fun Context.sendInvitationToUseSession() {
 
     val accountId = (applicationContext as ApplicationContext).loginStateRepository.get().requireLocalNumber()
 
-    val txt = Phrase.from(getString(R.string.accountIdShare))
-        .put(ACCOUNT_ID_KEY, accountId)
-        .format().toString()
+    // Deeplink handled by HomeActivity: opens "add contact" prefilled with this account ID
+    val txt = "session://add#$accountId"
 
     Intent().apply {
         action = Intent.ACTION_SEND

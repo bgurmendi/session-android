@@ -420,7 +420,8 @@ class HomeViewModel @Inject constructor(
             is Commands.ShowStartConversationSheet -> {
                 _dialogsState.update { it.copy(showStartConversationSheet =
                     StartConversationSheetData(
-                        accountId = loginStateRepository.requireLocalNumber()
+                        accountId = loginStateRepository.requireLocalNumber(),
+                        prefillId = command.prefillId
                     )
                 ) }
             }
@@ -624,7 +625,8 @@ class HomeViewModel @Inject constructor(
     )
 
     data class StartConversationSheetData(
-        val accountId: String
+        val accountId: String,
+        val prefillId: String? = null,
     )
 
     sealed interface UiEvent {
@@ -655,7 +657,7 @@ class HomeViewModel @Inject constructor(
             val upmCommand: UserProfileModalCommands
         ) : Commands
 
-        data object ShowStartConversationSheet : Commands
+        data class ShowStartConversationSheet(val prefillId: String? = null) : Commands
         data object HideStartConversationSheet : Commands
 
         data object HideSimpleDialog: Commands

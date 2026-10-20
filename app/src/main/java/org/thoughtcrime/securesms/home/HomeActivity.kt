@@ -261,6 +261,7 @@ class HomeActivity : ScreenLockActionBarActivity(),
         // Set content view
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (savedInstanceState == null) handleDeepLink(intent)
         // Set custom toolbar
         setSupportActionBar(binding.toolbar)
         // Set up toolbar buttons
@@ -1079,8 +1080,21 @@ class HomeActivity : ScreenLockActionBarActivity(),
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleDeepLink(intent)
+    }
+
+    // session://add#<accountId> opens the "enter account ID" screen prefilled with the id
+    private fun handleDeepLink(intent: Intent) {
+        if (intent.action != Intent.ACTION_VIEW) return
+        val accountId = intent.data?.fragment?.trim()?.takeIf { it.isNotEmpty() } ?: return
+        homeViewModel.onCommand(HomeViewModel.Commands.ShowStartConversationSheet(prefillId = accountId))
+    }
+
     private fun showStartConversation() {
-        homeViewModel.onCommand(HomeViewModel.Commands.ShowStartConversationSheet)
+        homeViewModel.onCommand(HomeViewModel.Commands.ShowStartConversationSheet())
     }
 
     private fun applyViewInsets() {

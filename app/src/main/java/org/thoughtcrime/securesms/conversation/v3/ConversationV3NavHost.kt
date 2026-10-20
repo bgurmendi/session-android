@@ -421,7 +421,7 @@ fun ConversationV3NavHost(
                     }
 
                 val newMessageViewModel = hiltViewModel<NewMessageViewModel, NewMessageViewModel.Factory>{ factory ->
-                    factory.create(allowCommunityUrl = false)
+                    factory.create(allowCommunityUrl = false, initialId = "")
                 }
 
                 val uiState by newMessageViewModel.state.collectAsState(State())

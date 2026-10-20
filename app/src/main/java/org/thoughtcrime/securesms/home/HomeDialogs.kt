@@ -146,6 +146,7 @@ fun HomeDialogs(
         if(dialogsState.showStartConversationSheet != null){
             StartConversationSheet(
                 accountId = dialogsState.showStartConversationSheet.accountId,
+                prefillId = dialogsState.showStartConversationSheet.prefillId,
                 onDismissRequest = {
                     sendCommand(HomeViewModel.Commands.HideStartConversationSheet)
                 }

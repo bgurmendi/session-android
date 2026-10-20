@@ -40,6 +40,7 @@ import java.net.IDN
 @HiltViewModel(assistedFactory = NewMessageViewModel.Factory::class)
 class NewMessageViewModel @AssistedInject constructor(
     @Assisted private val allowCommunityUrl: Boolean,
+    @Assisted initialId: String,
     private val application: Application,
     private val onsResolver: OnsResolver,
     private val openGroupManager: OpenGroupManager,
@@ -47,12 +48,12 @@ class NewMessageViewModel @AssistedInject constructor(
 ) : ViewModel(), Callbacks {
     @AssistedFactory
     interface Factory {
-        fun create(allowCommunityUrl: Boolean): NewMessageViewModel
+        fun create(allowCommunityUrl: Boolean, initialId: String): NewMessageViewModel
     }
 
     private val HELP_URL : String = "https://getsession.org/account-ids"
 
-    private val _state = MutableStateFlow(State())
+    private val _state = MutableStateFlow(State(newMessageIdOrOns = initialId))
     val state: StateFlow<State> = _state.asStateFlow()
 
     private val _success = MutableSharedFlow<Success>()

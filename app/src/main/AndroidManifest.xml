@@ -123,8 +123,16 @@
             android:theme="@style/Theme.Session.DayNight.FlatActionBar" />
         <activity
             android:name="org.thoughtcrime.securesms.home.HomeActivity"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+            android:theme="@style/Theme.Session.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="session" android:host="add" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity"
             android:exported="false"

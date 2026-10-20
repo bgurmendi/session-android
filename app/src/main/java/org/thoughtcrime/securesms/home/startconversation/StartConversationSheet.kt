@@ -55,6 +55,7 @@ import org.thoughtcrime.securesms.ui.theme.PreviewTheme
 fun StartConversationSheet(
     modifier: Modifier = Modifier,
     accountId: String,
+    prefillId: String? = null,
     onDismissRequest: () -> Unit,
 ){
     val sheetState = rememberModalBottomSheetState(
@@ -90,6 +91,7 @@ fun StartConversationSheet(
             ) {
                 StartConversationNavHost(
                     accountId = accountId,
+                    prefillId = prefillId,
                     onClose = {
                         scope.launch {
                             sheetState.hide()
@@ -125,6 +127,7 @@ sealed interface StartConversationDestination {
 @Composable
 fun StartConversationNavHost(
     accountId: String,
+    prefillId: String? = null,
     onClose: () -> Unit
 ){
     val navController = rememberNavController()
@@ -153,7 +156,11 @@ fun StartConversationNavHost(
     val activity = LocalActivity.current
     val context = LocalContext.current
 
-    NavHost(navController = navController, startDestination = StartConversationDestination.Home) {
+    NavHost(
+        navController = navController,
+        startDestination = if (prefillId != null) StartConversationDestination.NewMessage
+        else StartConversationDestination.Home
+    ) {
         // Home
         horizontalSlideComposable<StartConversationDestination.Home> {
             StartConversationScreen (
@@ -168,7 +175,7 @@ fun StartConversationNavHost(
         // New Message
         horizontalSlideComposable<StartConversationDestination.NewMessage> {
             val viewModel = hiltViewModel<NewMessageViewModel, NewMessageViewModel.Factory>{ factory ->
-                factory.create(allowCommunityUrl = true)
+                factory.create(allowCommunityUrl = true, initialId = prefillId.orEmpty())
             }
 
             val uiState by viewModel.state.collectAsState(State())
